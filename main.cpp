@@ -1,4 +1,5 @@
 #include "src/AuxMain.h"
+#include "src/Functions.h"
 #include <locale>
 #include <iostream>
 
@@ -9,6 +10,7 @@ int main() {
     int option;
     Graph graph;
     string file;
+    double cost;
     //readfiles
     do {
         showMenu();
@@ -22,6 +24,16 @@ int main() {
                     break;
                 }
                 printGraph(graph);
+                break;
+            case 2:
+                file = selectFile();
+                graph = file.empty() ? Graph() : createGraph(file);
+                if(graph.getAdj().empty()) {
+                    cout << "Invalid file\n";
+                    break;
+                }
+                cost = tspBacktracking(graph);
+                cout << "Cost: " << cost << "\n";
                 break;
             case 0:
                 cout << "Bye";

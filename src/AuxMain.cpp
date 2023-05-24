@@ -4,6 +4,7 @@
 
 void showMenu() {
     cout << "\n1) Print Graph\n"; //Depois muda-se e depois mete-se o print do grafo diferente
+    cout << "\n2) TSP Backtracking\n";
     cout << "\n0) Exit\n";
     cout << "\nChoose an option: ";
 }
@@ -125,7 +126,7 @@ Graph createGraph(const std::string& filename) {
             tokens.push_back(token);
         }
 
-        if (tokens.size() != 3) {
+        if (tokens.size() < 3) {
             std::cout << "Invalid line: " << line << "\n";
             continue;
         }
