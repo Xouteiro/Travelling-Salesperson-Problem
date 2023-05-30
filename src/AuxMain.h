@@ -18,8 +18,14 @@ void showMenu();
  */
 void showFileOptions();
 
+/**
+ * @brief Shows the file options for strongly connected graphs
+ */
+void showFileOptionsStronglyConnected();
 
 string selectFile();
+
+string selectFileStronglyConnected();
 
 /**
  * @brief Reads the option chosen by the user

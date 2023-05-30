@@ -41,20 +41,14 @@ void tspBacktrackingAux(const Graph& graph, std::vector<bool>& v, int current,
 }
 
 double tspTriangularAppHeuristic(const Graph& graph){
-    int n = int(graph.getAdj().size());
-    vector<bool> visited(n, false);
-    visited[0] = true;
-    int current = 0, visitedCount = 1;
-    double cost = 0, res = INT_MAX;
+    Graph mst = primMST(graph);
+    vector<int> traversal = dfsTraversal(mst);
+    double cost = 0;
 
-    tspTriangularAppHeuristicAux(graph, visited, current, n, visitedCount, cost, res);
-
-    return res;
-}
-
-void tspTriangularAppHeuristicAux(const Graph& graph, std::vector<bool>& v, int current,
-                                  int n, int visitedCount, double cost, double& res){
-
+    // sum of edges in dfs preorder traversal path
+    for(int i = 0 ; i < traversal.size() - 1 ; i++)
+        cost += graph.getAdj().at(traversal[i]).at(traversal[i+1]);
+    return cost;
 }
 
 // Function to construct and print MST for
@@ -98,4 +92,28 @@ Graph primMST(const Graph& graph) {
     }
 
     return mst;
+}
+
+vector<int> dfsTraversal(const Graph& graph){
+    int n = int(graph.getAdj().size());
+    vector<bool> visited(n, false);
+    vector<int> traversal;
+    int current = 0;
+
+    dfsAux(graph, visited, current, traversal);
+
+    traversal.push_back(0);
+
+    return traversal;
+}
+
+void dfsAux(const Graph& graph, vector<bool>& visited, int current, vector<int>& traversal) {
+    visited[current] = true;
+    traversal.push_back(current);
+    for(const auto& neighbor : graph.getAdj().at(current)) {
+        int i = neighbor.first;
+        if(!visited[i]) {
+            dfsAux(graph, visited, i, traversal);
+        }
+    }
 }

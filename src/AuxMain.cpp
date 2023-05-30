@@ -1,7 +1,6 @@
 #include "AuxMain.h"
 
 
-
 void showMenu() {
     cout << "\n1) Print Graph\n"; //Depois muda-se e depois mete-se o print do grafo diferente
     cout << "\n2) TSP Backtracking\n";
@@ -36,56 +35,108 @@ void showFileOptions(){
     cout << "\nChoose an option: ";
 }
 
+void showFileOptionsStronglyConnected(){
+    cout << "\nExtra Fully Connected Graphs:\n";
+    cout << "\n\t21) 25 edges\n";
+    cout << "\t22) 50 edges\n";
+    cout << "\t23) 75 edges\n";
+    cout << "\t24) 100 edges\n";
+    cout << "\t25) 200 edges\n";
+    cout << "\t26) 300 edges\n";
+    cout << "\t27) 400 edges\n";
+    cout << "\t28) 500 edges\n";
+    cout << "\t29) 600 edges\n";
+    cout << "\t210) 700 edges\n";
+    cout << "\t211) 800 edges\n";
+    cout << "\t212) 900 edges\n";
+    cout << "\nChoose an option: ";
+}
+
 string selectFile(){
     int option;
-        showFileOptions();
-        option = readOption();
-        switch (option) {
-            case 0:
-                break;
-            case 11:
-                return "../data/Toy-Graphs/shipping.csv";
-            case 12:
-                return "../data/Toy-Graphs/stadiums.csv";
-            case 13:
-                return "../data/Toy-Graphs/tourism.csv";
-            case 21:
-                return "../data/Extra_Fully_Connected_Graphs/edges_25.csv";
-            case 22:
-                return "../data/Extra_Fully_Connected_Graphs/edges_50.csv";
-            case 23:
-                return "../data/Extra_Fully_Connected_Graphs/edges_75.csv";
-            case 24:
-                return "../data/Extra_Fully_Connected_Graphs/edges_100.csv";
-            case 25:
-                return "../data/Extra_Fully_Connected_Graphs/edges_200.csv";
-            case 26:
-                return "../data/Extra_Fully_Connected_Graphs/edges_300.csv";
-            case 27:
-                return "../data/Extra_Fully_Connected_Graphs/edges_400.csv";
-            case 28:
-                return "../data/Extra_Fully_Connected_Graphs/edges_500.csv";
-            case 29:
-                return "../data/Extra_Fully_Connected_Graphs/edges_600.csv";
-            case 210:
-                return "../data/Extra_Fully_Connected_Graphs/edges_700.csv";
-            case 211:
-                return "../data/Extra_Fully_Connected_Graphs/edges_800.csv";
-            case 212:
-                return "../data/Extra_Fully_Connected_Graphs/edges_900.csv";
-            case 31:
-                return "../data/Real-World Graphs/graph1/edges.csv";
-            case 32:
-                return "../data/Real_World Graphs/graph2/edges.csv";
-            case 33:
-                return "../data/Real_World Graphs/graph3/edges.csv";
-            default:
-                return {};
-
-        }
+    showFileOptions();
+    option = readOption();
+    switch (option) {
+        case 0:
+            break;
+        case 11:
+            return "../data/Toy-Graphs/shipping.csv";
+        case 12:
+            return "../data/Toy-Graphs/stadiums.csv";
+        case 13:
+            return "../data/Toy-Graphs/tourism.csv";
+        case 21:
+            return "../data/Extra_Fully_Connected_Graphs/edges_25.csv";
+        case 22:
+            return "../data/Extra_Fully_Connected_Graphs/edges_50.csv";
+        case 23:
+            return "../data/Extra_Fully_Connected_Graphs/edges_75.csv";
+        case 24:
+            return "../data/Extra_Fully_Connected_Graphs/edges_100.csv";
+        case 25:
+            return "../data/Extra_Fully_Connected_Graphs/edges_200.csv";
+        case 26:
+            return "../data/Extra_Fully_Connected_Graphs/edges_300.csv";
+        case 27:
+            return "../data/Extra_Fully_Connected_Graphs/edges_400.csv";
+        case 28:
+            return "../data/Extra_Fully_Connected_Graphs/edges_500.csv";
+        case 29:
+            return "../data/Extra_Fully_Connected_Graphs/edges_600.csv";
+        case 210:
+            return "../data/Extra_Fully_Connected_Graphs/edges_700.csv";
+        case 211:
+            return "../data/Extra_Fully_Connected_Graphs/edges_800.csv";
+        case 212:
+            return "../data/Extra_Fully_Connected_Graphs/edges_900.csv";
+        case 31:
+            return "../data/Real-World Graphs/graph1/edges.csv";
+        case 32:
+            return "../data/Real_World Graphs/graph2/edges.csv";
+        case 33:
+            return "../data/Real_World Graphs/graph3/edges.csv";
+        default:
+            return {};
+    }
     return {};
 }
 
+string selectFileStronglyConnected(){
+    int option;
+    showFileOptionsStronglyConnected();
+    option = readOption();
+    switch (option) {
+        case 0:
+            break;
+        case 21:
+            return "../data/Extra_Fully_Connected_Graphs/edges_25.csv";
+        case 22:
+            return "../data/Extra_Fully_Connected_Graphs/edges_50.csv";
+        case 23:
+            return "../data/Extra_Fully_Connected_Graphs/edges_75.csv";
+        case 24:
+            return "../data/Extra_Fully_Connected_Graphs/edges_100.csv";
+        case 25:
+            return "../data/Extra_Fully_Connected_Graphs/edges_200.csv";
+        case 26:
+            return "../data/Extra_Fully_Connected_Graphs/edges_300.csv";
+        case 27:
+            return "../data/Extra_Fully_Connected_Graphs/edges_400.csv";
+        case 28:
+            return "../data/Extra_Fully_Connected_Graphs/edges_500.csv";
+        case 29:
+            return "../data/Extra_Fully_Connected_Graphs/edges_600.csv";
+        case 210:
+            return "../data/Extra_Fully_Connected_Graphs/edges_700.csv";
+        case 211:
+            return "../data/Extra_Fully_Connected_Graphs/edges_800.csv";
+        case 212:
+            return "../data/Extra_Fully_Connected_Graphs/edges_900.csv";
+        default:
+            return {};
+    }
+    return {};
+}
 
 int readOption() {
     int option;
@@ -96,14 +147,6 @@ int readOption() {
         return 100;
     }
     return option;
-}
-
-
-string readInput(){
-    string input;
-    getline(cin, input);
-    cout << endl;
-    return input;
 }
 
 Graph createGraph(const std::string& filename) {

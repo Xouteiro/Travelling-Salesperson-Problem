@@ -36,18 +36,14 @@ int main() {
                 cout << "Cost: " << cost << "\n";
                 break;
             case 3:
-                file = selectFile();
+                file = selectFileStronglyConnected();
                 graph = file.empty() ? Graph() : createGraph(file);
                 if(graph.getAdj().empty()) {
                     cout << "Invalid file\n";
                     break;
                 }
-                cout << "Graph:" << endl;
-                graph.printGraph();
-
-                cout << "MST: " << endl;
-                mst = primMST(graph);
-                mst.printGraph();
+                cost = tspTriangularAppHeuristic(graph);
+                cout << "Cost: " << cost << "\n";
                 break;
             case 0:
                 cout << "Bye";
