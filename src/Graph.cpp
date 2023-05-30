@@ -6,8 +6,8 @@ void Graph::addEdge(int source, int destination, double distance) {
 }
 
 
-void Graph::printGraph(const std::unordered_map<int, std::unordered_map<int, double>>& graph) {
-    for (const auto& entry : graph) {
+void Graph::printGraph() const {
+    for (const auto& entry : this->getAdj()) {
         int source = entry.first;
         const auto& destinations = entry.second;
         std::cout << "Source: " << source << "\n";

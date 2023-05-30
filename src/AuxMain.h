@@ -41,10 +41,5 @@ string readInput();
  */
 Graph createGraph(const std::string& filename);
 
-/**
- * @brief Prints a graph
- * @param graph The graph to be printed
- */
-void printGraph(const Graph& graph);
 
 #endif

@@ -8,7 +8,7 @@
 int main() {
     setlocale(LC_ALL, "pt_PT.UTF-8");
     int option;
-    Graph graph;
+    Graph graph, mst;
     string file;
     double cost;
     //readfiles
@@ -23,7 +23,7 @@ int main() {
                     cout << "Invalid file\n";
                     break;
                 }
-                printGraph(graph);
+                graph.printGraph();
                 break;
             case 2:
                 file = selectFile();
@@ -34,6 +34,20 @@ int main() {
                 }
                 cost = tspBacktracking(graph);
                 cout << "Cost: " << cost << "\n";
+                break;
+            case 3:
+                file = selectFile();
+                graph = file.empty() ? Graph() : createGraph(file);
+                if(graph.getAdj().empty()) {
+                    cout << "Invalid file\n";
+                    break;
+                }
+                cout << "Graph:" << endl;
+                graph.printGraph();
+
+                cout << "MST: " << endl;
+                mst = primMST(graph);
+                mst.printGraph();
                 break;
             case 0:
                 cout << "Bye";

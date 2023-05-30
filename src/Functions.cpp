@@ -1,20 +1,13 @@
-
-
 #include "Functions.h"
 
-double tspBacktracking(const Graph& graph)
-{
+using namespace std;
+
+double tspBacktracking(const Graph& graph) {
     int n = int(graph.getAdj().size());
-
-
     std::vector<bool> visited(n, false);
     visited[0] = true;
-
-    int current = 0;
-    int visitedCount = 1;
-    double cost = 0;
-
-    double res = INT_MAX;
+    int current = 0, visitedCount = 1;
+    double cost = 0, res = INT_MAX;
 
     tspBacktrackingAux(graph, visited, current, n, visitedCount, cost, res);
 
@@ -45,4 +38,63 @@ void tspBacktrackingAux(const Graph& graph, std::vector<bool>& v, int current,
             v[i] = false;
         }
     }
+}
+
+double tspTriangularAppHeuristic(const Graph& graph){
+    int n = int(graph.getAdj().size());
+    vector<bool> visited(n, false);
+    visited[0] = true;
+    int current = 0, visitedCount = 1;
+    double cost = 0, res = INT_MAX;
+
+    tspTriangularAppHeuristicAux(graph, visited, current, n, visitedCount, cost, res);
+
+    return res;
+}
+
+void tspTriangularAppHeuristicAux(const Graph& graph, std::vector<bool>& v, int current,
+                                  int n, int visitedCount, double cost, double& res){
+
+}
+
+// Function to construct and print MST for
+// a graph represented using adjacency
+// matrix representation
+Graph primMST(const Graph& graph) {
+    int n = int(graph.getAdj().size());
+    Graph mst;
+    vector<bool> visited(n, false);
+    unordered_map<int, unordered_map<int, double>> edges;
+    int next = 0;
+
+    for(int i = 0 ; i < n ; i++){
+        auto entry = graph.getAdj().at(next);
+        visited[next] = true;
+        int final_v = -1;
+        double final_weight = INT_MAX;
+
+        for(auto edge : entry){
+            edges[next][edge.first] = edge.second; // [destination] = [weight]
+        }
+
+        for(const auto& destination : edges){
+            int v = destination.first;
+            for(const auto& edge : destination.second) { // edge = (destination, weight
+                double weight = edge.second;
+                if (!visited[edge.first] && weight < final_weight) {
+                    final_v = v;
+                    final_weight = weight;
+                }
+            }
+        }
+
+        edges[next].erase(final_v);
+
+        if(final_v != -1) {
+            mst.addEdge(next, final_v, final_weight);
+            next = final_v;
+        }
+    }
+
+    return mst;
 }

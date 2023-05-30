@@ -17,7 +17,7 @@ private:
 public:
     void addEdge(int source, int destination, double distance);
 
-    static void printGraph(const std::unordered_map<int, std::unordered_map<int, double>>& graph);
+    void printGraph() const;
 
     const std::unordered_map<int, std::unordered_map<int, double>> &getAdj() const;
 

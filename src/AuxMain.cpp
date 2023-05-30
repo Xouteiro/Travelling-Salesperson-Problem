@@ -5,6 +5,7 @@
 void showMenu() {
     cout << "\n1) Print Graph\n"; //Depois muda-se e depois mete-se o print do grafo diferente
     cout << "\n2) TSP Backtracking\n";
+    cout << "\n3) TSP Triangular Approximation Heuristic\n";
     cout << "\n0) Exit\n";
     cout << "\nChoose an option: ";
 }
@@ -139,17 +140,4 @@ Graph createGraph(const std::string& filename) {
     }
 
     return graph;
-}
-
-
-void printGraph(const Graph& graph) {
-    std::unordered_map<int, std::unordered_map<int, double>> adj = graph.getAdj();
-    for (const auto& entry : adj) {
-        int source = entry.first;
-        const auto& destinations = entry.second;
-        std::cout << "Source: " << source << "\n";
-        for (const auto& destination : destinations) {
-            std::cout << "  Destination: " << destination.first << ", Distance: " << destination.second << "\n";
-        }
-    }
 }
