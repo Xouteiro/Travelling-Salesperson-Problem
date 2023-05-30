@@ -72,17 +72,18 @@ Graph primMST(const Graph& graph) {
         visited[next] = true;
         int final_v = -1;
         double final_weight = INT_MAX;
+        int source = -1;
 
         for(auto edge : entry){
             edges[next][edge.first] = edge.second; // [destination] = [weight]
         }
 
         for(const auto& destination : edges){
-            int v = destination.first;
             for(const auto& edge : destination.second) { // edge = (destination, weight
                 double weight = edge.second;
                 if (!visited[edge.first] && weight < final_weight) {
-                    final_v = v;
+                    source = destination.first;
+                    final_v = edge.first;
                     final_weight = weight;
                 }
             }
@@ -91,7 +92,7 @@ Graph primMST(const Graph& graph) {
         edges[next].erase(final_v);
 
         if(final_v != -1) {
-            mst.addEdge(next, final_v, final_weight);
+            mst.addEdge(source, final_v, final_weight);
             next = final_v;
         }
     }
