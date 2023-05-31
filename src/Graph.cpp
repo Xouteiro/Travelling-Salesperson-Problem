@@ -25,4 +25,20 @@ void Graph::setAdj(const std::unordered_map<int, std::unordered_map<int, double>
     Graph::adj = adj;
 }
 
+void Graph::addNode(Node node){
+    nodes.push_back(node);
+}
 
+const std::vector<Node> &Graph::getNodes() const {
+    return nodes;
+}
+
+void Graph::setNodes(const std::vector<Node> &nodes) {
+    Graph::nodes = nodes;
+}
+
+void Graph::printNodes() const {
+    for(auto node : nodes){
+        std::cout << std::setprecision(14) << std::fixed << node.getId() << " ->  x: " << node.getX() << "  y: " << node.getY() << std::endl;
+    }
+}

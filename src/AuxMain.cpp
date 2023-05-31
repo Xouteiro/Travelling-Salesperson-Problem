@@ -49,6 +49,11 @@ void showFileOptionsStronglyConnected(){
     cout << "\t210) 700 edges\n";
     cout << "\t211) 800 edges\n";
     cout << "\t212) 900 edges\n";
+    cout << "\nReal World Graphs:\n";
+    cout << "\n\t31) Graph 1\n";
+    cout << "\t32) Graph 2\n";
+    cout << "\t33) Graph 3\n";
+    cout << "\n0) Exit\n";
     cout << "\nChoose an option: ";
 }
 
@@ -132,6 +137,12 @@ string selectFileStronglyConnected(){
             return "../data/Extra_Fully_Connected_Graphs/edges_800.csv";
         case 212:
             return "../data/Extra_Fully_Connected_Graphs/edges_900.csv";
+        case 31:
+            return "../data/Real-World Graphs/graph1/edges.csv|../data/Real-World Graphs/graph1/nodes.csv";
+        case 32:
+            return "../data/Real-World Graphs/graph2/edges.csv|../data/Real-World Graphs/graph2/nodes.csv";
+        case 33:
+            return "../data/Real-World Graphs/graph3/edges.csv|../data/Real-World Graphs/graph3/nodes.csv";
         default:
             return {};
     }
@@ -183,4 +194,37 @@ Graph createGraph(const std::string& filename) {
     }
 
     return graph;
+}
+
+void addNodesToGraph(Graph& graph, const string& filename){
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        std::cout << "Error on opening: " << filename << "\n";
+        return;
+    }
+
+    std::string line;
+    std::getline(file, line); // Skip the header line
+
+    while (std::getline(file, line)) {
+        std::stringstream ss(line);
+        std::string token;
+        std::vector<std::string> tokens;
+
+        while (std::getline(ss, token, ',')) {
+            tokens.push_back(token);
+        }
+
+        if (tokens.size() < 3) {
+            std::cout << "Invalid line: " << line << "\n";
+            continue;
+        }
+
+        int id = std::stoi(tokens[0]);
+        double x = std::stod(tokens[1]);
+        double y = std::stod(tokens[2]);
+
+        Node node = Node(id, x, y);
+        graph.addNode(node);
+    }
 }

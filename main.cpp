@@ -4,12 +4,11 @@
 #include <iostream>
 
 
-
 int main() {
-    setlocale(LC_ALL, "pt_PT.UTF-8");
     int option;
     Graph graph, mst;
-    string file;
+    string file, nodesFile = "";
+    size_t separator;
     double cost;
     //readfiles
     do {
@@ -33,17 +32,28 @@ int main() {
                     break;
                 }
                 cost = tspBacktracking(graph);
-                cout << "Cost: " << cost << "\n";
+                cout << fixed << "Cost: " << cost << "\n";
                 break;
             case 3:
                 file = selectFileStronglyConnected();
+                separator = file.find('|');
+                cout << separator << endl;
+                if(separator < string::npos){
+                    nodesFile = file.substr(separator+1);
+                    file = file.substr(0, separator);
+                }
+
                 graph = file.empty() ? Graph() : createGraph(file);
+                if(!nodesFile.empty()) addNodesToGraph(graph, nodesFile);
+
                 if(graph.getAdj().empty()) {
                     cout << "Invalid file\n";
                     break;
                 }
+                graph.printNodes();
+                break;
                 cost = tspTriangularAppHeuristic(graph);
-                cout << "Cost: " << cost << "\n";
+                cout << fixed << "Cost: " << cost << "\n";
                 break;
             case 0:
                 cout << "Bye";

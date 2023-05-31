@@ -3,7 +3,6 @@
 
 
 #include "Graph.h"
-#include <iostream>
 
 using namespace std;
 
@@ -47,5 +46,11 @@ string readInput();
  */
 Graph createGraph(const std::string& filename);
 
+/**
+ * @brief Adds nodes to a graph from a file
+ * @param graph The graph to which the nodes will be added
+ * @param filename The name of the file
+ */
+void addNodesToGraph(Graph& graph, const string& filename);
 
 #endif
