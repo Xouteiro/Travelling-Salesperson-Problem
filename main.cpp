@@ -2,15 +2,18 @@
 #include "src/Functions.h"
 #include <locale>
 #include <iostream>
+#include <ctime>
 
 
 int main() {
     int option;
     Graph graph, mst;
-    string file, nodesFile = "";
+    string file, nodesFile;
     size_t separator;
     double cost;
-    //readfiles
+    double elapsedTime;
+    clock_t begin;
+
     do {
         showMenu();
         option = readOption();
@@ -31,13 +34,16 @@ int main() {
                     cout << "Invalid file\n";
                     break;
                 }
+                begin = clock();
                 cost = tspBacktracking(graph);
-                cout << fixed << "Cost: " << cost << "\n";
+                elapsedTime = double(clock() - begin) / CLOCKS_PER_SEC;
+                cout << setprecision(14) << "Cost: " << cost << "\n";
+                cout << fixed << setprecision(6) << "Elapsed time: " << elapsedTime << " seconds\n";
                 break;
             case 3:
                 file = selectFileStronglyConnected();
+
                 separator = file.find('|');
-                cout << separator << endl;
                 if(separator < string::npos){
                     nodesFile = file.substr(separator+1);
                     file = file.substr(0, separator);
@@ -50,10 +56,12 @@ int main() {
                     cout << "Invalid file\n";
                     break;
                 }
-                graph.printNodes();
-                break;
+
+                begin = clock();
                 cost = tspTriangularAppHeuristic(graph);
-                cout << fixed << "Cost: " << cost << "\n";
+                elapsedTime = double(clock() - begin) / CLOCKS_PER_SEC;
+                cout << setprecision(14) << "Cost: " << cost << "\n";
+                cout << fixed << setprecision(6) << "Elapsed time: " << elapsedTime << " seconds\n";
                 break;
             case 0:
                 cout << "Bye";
