@@ -36,6 +36,9 @@ void showFileOptions(){
 }
 
 void showFileOptionsStronglyConnected(){
+    cout << "\nToy Graphs:\n";
+    cout << "\n\t12) Stadiums\n";
+    cout << "\t13) Tourism\n";
     cout << "\nExtra Fully Connected Graphs:\n";
     cout << "\n\t21) 25 edges\n";
     cout << "\t22) 50 edges\n";
@@ -113,6 +116,10 @@ string selectFileStronglyConnected(){
     switch (option) {
         case 0:
             break;
+        case 11:
+            return "../data/Toy-Graphs/shipping.csv";
+        case 12:
+            return "../data/Toy-Graphs/stadiums.csv";
         case 21:
             return "../data/Extra_Fully_Connected_Graphs/edges_25.csv";
         case 22:
