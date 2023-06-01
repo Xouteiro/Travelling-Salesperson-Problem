@@ -117,3 +117,68 @@ void dfsAux(const Graph& graph, vector<bool>& visited, int current, vector<int>&
         }
     }
 }
+
+
+#include "Graph.h"
+#include <limits>
+#include <iostream>
+
+#include "Graph.h"
+#include <limits>
+#include <iostream>
+
+#include <unordered_map>
+#include <limits>
+#include <iostream>
+
+// Nearest Neighbor algorithm for TSP
+std::pair<std::vector<int>, double> nearestNeighbor(const Graph& graph){
+    int startNode = 0;
+    const std::unordered_map<int, std::unordered_map<int, double>>& adj = graph.getAdj();
+
+    if (adj.count(startNode) == 0) {
+        std::cout << "Invalid startNode: " << startNode << std::endl;
+        return std::make_pair(std::vector<int>(), 0.0);
+    }
+
+    std::vector<int> tour;
+    std::vector<bool> visited(adj.size(), false);
+    double totalCost = 0.0;
+
+    int current = startNode;
+    visited[current] = true;
+    tour.push_back(current);
+
+    while (tour.size() < adj.size()) {
+        double minDistance = INT_MAX;
+        int nextNode = -1;
+
+        const std::unordered_map<int, double>& currentNeighbors = adj.at(current);
+
+        for (const auto& neighbor : currentNeighbors) {
+            int neighborNode = neighbor.first;
+            double distance = neighbor.second;
+
+            if (!visited[neighborNode] && distance < minDistance) {
+                minDistance = distance;
+                nextNode = neighborNode;
+            }
+        }
+
+        if (nextNode != -1) {
+            tour.push_back(nextNode);
+            visited[nextNode] = true;
+            totalCost += minDistance;
+            current = nextNode;
+        }
+        else {
+            std::cout << "Invalid adjacency matrix. Graph may be disconnected." << std::endl;
+            return std::make_pair(std::vector<int>(), 0.0);
+        }
+    }
+
+    // Add the cost of returning to the start node
+    totalCost += adj.at(tour.back()).at(startNode);
+
+    return std::make_pair(tour, totalCost);
+}

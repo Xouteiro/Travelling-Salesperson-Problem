@@ -13,6 +13,7 @@ int main() {
     double cost;
     double elapsedTime;
     clock_t begin;
+    std::pair<std::vector<int>, double>  result;
 
     do {
         showMenu();
@@ -37,7 +38,7 @@ int main() {
                 begin = clock();
                 cost = tspBacktracking(graph);
                 elapsedTime = double(clock() - begin) / CLOCKS_PER_SEC;
-                cout << setprecision(14) << "Cost: " << cost << "\n";
+                cout << setprecision(8) << "Cost: " << cost/1000 << " Km \n";
                 cout << fixed << setprecision(6) << "Elapsed time: " << elapsedTime << " seconds\n";
                 break;
             case 3:
@@ -60,8 +61,29 @@ int main() {
                 begin = clock();
                 cost = tspTriangularAppHeuristic(graph);
                 elapsedTime = double(clock() - begin) / CLOCKS_PER_SEC;
-                cout << setprecision(14) << "Cost: " << cost << "\n";
+                cout << setprecision(8) << "Cost: " << cost/1000 << " Km \n";
                 cout << fixed << setprecision(6) << "Elapsed time: " << elapsedTime << " seconds\n";
+                break;
+            case 4:
+                file = selectFileStronglyConnected();
+                separator = file.find('|');
+                if(separator < string::npos){
+                    nodesFile = file.substr(separator+1);
+                    file = file.substr(0, separator);
+                }
+                graph = file.empty() ? Graph() : createGraph(file);
+                begin = clock();
+                result = nearestNeighbor(graph);
+                cost = result.second;
+                elapsedTime = double(clock() - begin) / CLOCKS_PER_SEC;
+                cout << setprecision(8) << "Cost: " << cost/1000 << " Km \n";
+                cout << fixed << setprecision(6) << "Elapsed time: " << elapsedTime << " seconds\n";
+                std::cout << "Tour: ";
+                for (int i = 0; i < result.first.size(); i++) {
+                    std::cout << result.first[i] << " -> ";
+                }
+                std::cout << result.first[0] << std::endl;
+                std::cout << std::endl;
                 break;
             case 0:
                 cout << "Bye";

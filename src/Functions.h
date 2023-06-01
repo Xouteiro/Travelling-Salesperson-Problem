@@ -20,4 +20,6 @@ std::vector<int> dfsTraversal(const Graph& graph);
 
 void dfsAux(const Graph& graph, std::vector<bool>& visited, int current, std::vector<int>& traversal);
 
+std::pair<std::vector<int>, double> nearestNeighbor(const Graph& graph);
+
 #endif
