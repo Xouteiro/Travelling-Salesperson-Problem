@@ -59,10 +59,16 @@ int main() {
                 }
 
                 begin = clock();
-                cost = tspTriangularAppHeuristic(graph);
+                result = tspTriangularAppHeuristic(graph);
                 elapsedTime = double(clock() - begin) / CLOCKS_PER_SEC;
+                cost = result.second;
                 cout << setprecision(8) << "Cost: " << cost/1000 << " Km \n";
                 cout << fixed << setprecision(6) << "Elapsed time: " << elapsedTime << " seconds\n";
+                std::cout << "Tour: ";
+                for (int i = 0 ; i < result.first.size() ; i++) {
+                    if(i == result.first.size() - 1) std::cout << result.first[i] << "\n";
+                    else std::cout << result.first[i] << " -> ";
+                }
                 break;
             case 4:
                 file = selectFileStronglyConnected();
@@ -74,16 +80,15 @@ int main() {
                 graph = file.empty() ? Graph() : createGraph(file);
                 begin = clock();
                 result = nearestNeighbor(graph);
-                cost = result.second;
                 elapsedTime = double(clock() - begin) / CLOCKS_PER_SEC;
+                cost = result.second;
                 cout << setprecision(8) << "Cost: " << cost/1000 << " Km \n";
                 cout << fixed << setprecision(6) << "Elapsed time: " << elapsedTime << " seconds\n";
                 std::cout << "Tour: ";
-                for (int i = 0; i < result.first.size(); i++) {
-                    std::cout << result.first[i] << " -> ";
+                for (int i : result.first) {
+                    std::cout << i << " -> ";
                 }
-                std::cout << result.first[0] << std::endl;
-                std::cout << std::endl;
+                std::cout << result.first[0] << std::endl << std::endl;
                 break;
             case 0:
                 cout << "Bye";

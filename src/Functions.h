@@ -2,24 +2,21 @@
 #define PROJ2_FUNCTIONS_H
 
 #include "Graph.h"
-#include <iostream>
-
-
 
 double tspBacktracking(const Graph& graph);
 
 
-void tspBacktrackingAux(const Graph& graph, std::vector<bool>& v, int currPos,
+void tspBacktrackingAux(const Graph& graph, vector<bool>& v, int currPos,
              int n, int count, double cost, double& ans);
 
-double tspTriangularAppHeuristic(const Graph& graph);
+pair<vector<int>, double> tspTriangularAppHeuristic(const Graph& graph);
 
 Graph primMST(const Graph& graph);
 
-std::vector<int> dfsTraversal(const Graph& graph);
+vector<int> dfsTraversal(const Graph& graph);
 
-void dfsAux(const Graph& graph, std::vector<bool>& visited, int current, std::vector<int>& traversal);
+void dfsAux(const Graph& graph, vector<bool>& visited, int current, vector<int>& traversal);
 
-std::pair<std::vector<int>, double> nearestNeighbor(const Graph& graph);
+pair<vector<int>, double> nearestNeighbor(const Graph& graph);
 
 #endif

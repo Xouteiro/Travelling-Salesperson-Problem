@@ -10,26 +10,27 @@
 #include <unordered_map>
 #include <iomanip>
 
+using namespace std;
 
 class Graph {
 
 private:
-    std::unordered_map<int, std::unordered_map<int, double>> adj;
-    std::vector<Node> nodes;
+    unordered_map<int, unordered_map<int, double>> adj;
+    vector<Node> nodes;
 public:
     void addEdge(int source, int destination, double distance);
 
     void printGraph() const;
 
-    const std::unordered_map<int, std::unordered_map<int, double>> &getAdj() const;
+    const unordered_map<int, unordered_map<int, double>> &getAdj() const;
 
-    void setAdj(const std::unordered_map<int, std::unordered_map<int, double>> &adj);
+    void setAdj(const unordered_map<int, unordered_map<int, double>> &adj);
 
     void addNode(Node node);
 
-    const std::vector<Node> &getNodes() const;
+    const vector<Node> &getNodes() const;
 
-    void setNodes(const std::vector<Node> &nodes);
+    void setNodes(const vector<Node> &nodes);
 
     void printNodes() const;
 };
