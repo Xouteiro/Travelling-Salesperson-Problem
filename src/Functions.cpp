@@ -1,24 +1,23 @@
 #include "Functions.h"
 
-using namespace std;
 
 double tspBacktracking(const Graph& graph) {
     int n = int(graph.getAdj().size());
-    std::vector<bool> visited(n, false);
+    vector<bool> visited(n, false);
     visited[0] = true;
     int current = 0, visitedCount = 1;
     double cost = 0, res = INT_MAX;
 
     tspBacktrackingAux(graph, visited, current, n, visitedCount, cost, res);
 
-    return res;// You can perform further actions with the result here
+    return res;
 }
 
-void tspBacktrackingAux(const Graph& graph, std::vector<bool>& v, int current,
+void tspBacktrackingAux(const Graph& graph, vector<bool>& v, int current,
              int n, int visitedCount, double cost, double& res) {
 
     if (visitedCount == n && graph.getAdj().at(current).count(0)) {
-        res = std::min(res, cost + graph.getAdj().at(current).at(0));
+        res = min(res, cost + graph.getAdj().at(current).at(0));
         return;
     }
 
@@ -40,15 +39,17 @@ void tspBacktrackingAux(const Graph& graph, std::vector<bool>& v, int current,
     }
 }
 
-double tspTriangularAppHeuristic(const Graph& graph){
+pair<vector<int>, double> tspTriangularAppHeuristic(const Graph& graph){
+    // create minimum spanning tree
     Graph mst = primMST(graph);
+    // create the path through a dfs
     vector<int> traversal = dfsTraversal(mst);
     double cost = 0;
 
     // sum of edges in dfs preorder traversal path
     for(int i = 0 ; i < traversal.size() - 1 ; i++)
         cost += graph.getAdj().at(traversal[i]).at(traversal[i+1]);
-    return cost;
+    return make_pair(traversal, cost);
 }
 
 // Function to construct and print MST for
@@ -94,7 +95,7 @@ Graph primMST(const Graph& graph) {
     return mst;
 }
 
-vector<int> dfsTraversal(const Graph& graph){
+vector<int> dfsTraversal(const Graph& graph) {
     int n = int(graph.getAdj().size());
     vector<bool> visited(n, false);
     vector<int> traversal;
@@ -116,4 +117,57 @@ void dfsAux(const Graph& graph, vector<bool>& visited, int current, vector<int>&
             dfsAux(graph, visited, i, traversal);
         }
     }
+}
+
+
+// Nearest Neighbor algorithm for TSP
+pair<vector<int>, double> nearestNeighbor(const Graph& graph) {
+    int startNode = 0;
+    const unordered_map<int, unordered_map<int, double>>& adj = graph.getAdj();
+
+    if (adj.count(startNode) == 0) {
+        cout << "Invalid startNode: " << startNode << std::endl;
+        return make_pair(vector<int>(), 0.0);
+    }
+
+    vector<int> tour;
+    vector<bool> visited(adj.size(), false);
+    double totalCost = 0.0;
+
+    int current = startNode;
+    visited[current] = true;
+    tour.push_back(current);
+
+    while (tour.size() < adj.size()) {
+        double minDistance = INT_MAX;
+        int nextNode = -1;
+
+        const unordered_map<int, double>& currentNeighbors = adj.at(current);
+
+        for (const auto& neighbor : currentNeighbors) {
+            int neighborNode = neighbor.first;
+            double distance = neighbor.second;
+
+            if (!visited[neighborNode] && distance < minDistance) {
+                minDistance = distance;
+                nextNode = neighborNode;
+            }
+        }
+
+        if (nextNode != -1) {
+            tour.push_back(nextNode);
+            visited[nextNode] = true;
+            totalCost += minDistance;
+            current = nextNode;
+        }
+        else {
+            cout << "Invalid adjacency matrix. Graph may be disconnected." << endl;
+            return make_pair(vector<int>(), 0.0);
+        }
+    }
+
+    // Add the cost of returning to the start node
+    totalCost += adj.at(tour.back()).at(startNode);
+
+    return make_pair(tour, totalCost);
 }
