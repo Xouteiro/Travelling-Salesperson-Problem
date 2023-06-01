@@ -47,8 +47,12 @@ pair<vector<int>, double> tspTriangularAppHeuristic(const Graph& graph){
     double cost = 0;
 
     // sum of edges in dfs preorder traversal path
-    for(int i = 0 ; i < traversal.size() - 1 ; i++)
-        cost += graph.getAdj().at(traversal[i]).at(traversal[i+1]);
+    for(int i = 0 ; i < traversal.size() - 1 ; i++) {
+        if(graph.getAdj().at(traversal[i]).find(traversal[i + 1]) != graph.getAdj().at(traversal[i]).end())
+            cost += graph.getAdj().at(traversal[i]).at(traversal[i + 1]);
+        else
+            cost += distance(graph.getNodes()[traversal[i]], graph.getNodes()[traversal[i + 1]]);
+    }
     return make_pair(traversal, cost);
 }
 
@@ -170,4 +174,24 @@ pair<vector<int>, double> nearestNeighbor(const Graph& graph) {
     totalCost += adj.at(tour.back()).at(startNode);
 
     return make_pair(tour, totalCost);
+}
+
+double distance(const Node& node1, const Node& node2){
+    double lat1 = node1.getX();
+    double lat2 = node2.getX();
+    double lon1 = node1.getY();
+    double lon2 = node2.getY();
+    int earthRadius = 6371000; // metres
+    double latitudeSource = lat1 * M_PI / 180;
+    double latitudeDestination = lat2 * M_PI / 180;
+    double latitudeDiff = (lat2 - lat1) * M_PI / 180;
+    double longitudeDiff = (lon2 - lon1) * M_PI / 180;
+
+    double a = sin(latitudeDiff / 2) * sin(latitudeDiff / 2) +
+               cos(latitudeSource) * cos(latitudeDestination) *
+               sin(longitudeDiff / 2) * sin(longitudeDiff / 2);
+
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+
+    return earthRadius * c / 1000; // in km
 }

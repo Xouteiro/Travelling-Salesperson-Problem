@@ -19,4 +19,6 @@ void dfsAux(const Graph& graph, vector<bool>& visited, int current, vector<int>&
 
 pair<vector<int>, double> nearestNeighbor(const Graph& graph);
 
+double distance(const Node& node1, const Node& node2);
+
 #endif
