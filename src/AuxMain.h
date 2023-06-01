@@ -3,7 +3,6 @@
 
 
 #include "Graph.h"
-#include <iostream>
 
 using namespace std;
 
@@ -18,8 +17,14 @@ void showMenu();
  */
 void showFileOptions();
 
+/**
+ * @brief Shows the file options for strongly connected graphs
+ */
+void showFileOptionsStronglyConnected();
 
 string selectFile();
+
+string selectFileStronglyConnected();
 
 /**
  * @brief Reads the option chosen by the user
@@ -41,5 +46,11 @@ string readInput();
  */
 Graph createGraph(const std::string& filename);
 
+/**
+ * @brief Adds nodes to a graph from a file
+ * @param graph The graph to which the nodes will be added
+ * @param filename The name of the file
+ */
+void addNodesToGraph(Graph& graph, const string& filename);
 
 #endif

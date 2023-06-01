@@ -2,16 +2,18 @@
 #include "src/Functions.h"
 #include <locale>
 #include <iostream>
-
+#include <ctime>
 
 
 int main() {
-    setlocale(LC_ALL, "pt_PT.UTF-8");
     int option;
     Graph graph, mst;
-    string file;
+    string file, nodesFile;
+    size_t separator;
     double cost;
-    //readfiles
+    double elapsedTime;
+    clock_t begin;
+
     do {
         showMenu();
         option = readOption();
@@ -32,22 +34,34 @@ int main() {
                     cout << "Invalid file\n";
                     break;
                 }
+                begin = clock();
                 cost = tspBacktracking(graph);
-                cout << "Cost: " << cost << "\n";
+                elapsedTime = double(clock() - begin) / CLOCKS_PER_SEC;
+                cout << setprecision(14) << "Cost: " << cost << "\n";
+                cout << fixed << setprecision(6) << "Elapsed time: " << elapsedTime << " seconds\n";
                 break;
             case 3:
-                file = selectFile();
+                file = selectFileStronglyConnected();
+
+                separator = file.find('|');
+                if(separator < string::npos){
+                    nodesFile = file.substr(separator+1);
+                    file = file.substr(0, separator);
+                }
+
                 graph = file.empty() ? Graph() : createGraph(file);
+                if(!nodesFile.empty()) addNodesToGraph(graph, nodesFile);
+
                 if(graph.getAdj().empty()) {
                     cout << "Invalid file\n";
                     break;
                 }
-                cout << "Graph:" << endl;
-                graph.printGraph();
 
-                cout << "MST: " << endl;
-                mst = primMST(graph);
-                mst.printGraph();
+                begin = clock();
+                cost = tspTriangularAppHeuristic(graph);
+                elapsedTime = double(clock() - begin) / CLOCKS_PER_SEC;
+                cout << setprecision(14) << "Cost: " << cost << "\n";
+                cout << fixed << setprecision(6) << "Elapsed time: " << elapsedTime << " seconds\n";
                 break;
             case 0:
                 cout << "Bye";
