@@ -39,7 +39,7 @@ int main() {
                 cost = tspBacktracking(graph);
                 elapsedTime = double(clock() - begin) / CLOCKS_PER_SEC;
                 cout << setprecision(8) << "Cost: " << cost/1000 << " Km \n";
-                cout << fixed << setprecision(6) << "Elapsed time: " << elapsedTime << " seconds\n";
+                cout << setprecision(6) << "Elapsed time: " << elapsedTime << " seconds\n";
                 break;
             case 3:
                 file = selectFileStronglyConnected();
@@ -63,7 +63,7 @@ int main() {
                 elapsedTime = double(clock() - begin) / CLOCKS_PER_SEC;
                 cost = result.second;
                 cout << setprecision(8) << "Cost: " << cost/1000 << " Km \n";
-                cout << fixed << setprecision(6) << "Elapsed time: " << elapsedTime << " seconds\n";
+                cout << setprecision(6) << "Elapsed time: " << elapsedTime << " seconds\n";
                 std::cout << "Tour: ";
                 for (int i = 0 ; i < result.first.size() ; i++) {
                     if(i == result.first.size() - 1) std::cout << result.first[i] << "\n";
@@ -83,7 +83,7 @@ int main() {
                 elapsedTime = double(clock() - begin) / CLOCKS_PER_SEC;
                 cost = result.second;
                 cout << setprecision(8) << "Cost: " << cost/1000 << " Km \n";
-                cout << fixed << setprecision(6) << "Elapsed time: " << elapsedTime << " seconds\n";
+                cout << setprecision(6) << "Elapsed time: " << elapsedTime << " seconds\n";
                 std::cout << "Tour: ";
                 for (int i : result.first) {
                     std::cout << i << " -> ";
