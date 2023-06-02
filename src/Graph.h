@@ -2,6 +2,7 @@
 #define PROJ2_GRAPH_H
 
 #include "Node.h"
+#include "UnionFind.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
