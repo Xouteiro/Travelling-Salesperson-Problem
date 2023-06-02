@@ -176,7 +176,8 @@ Graph createGraph(const std::string& filename) {
     }
 
     std::string line;
-    std::getline(file, line); // Skip the header line
+    if(filename.find("Extra_Fully_Connected_Graphs") == std::string::npos) // extra fully connected graphs have no header
+        std::getline(file, line); // Skip the header line
 
     Graph graph;
 
