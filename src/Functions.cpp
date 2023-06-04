@@ -40,8 +40,8 @@ void tspBacktrackingAux(const Graph& graph, vector<bool>& v, int current,
 }
 
 pair<vector<int>, double> tspTriangularAppHeuristic(const Graph& graph){
-    // create minimum spanning tree
-    Graph mst = primMST(graph);
+    // create minimum spanning tree using kruskal
+    Graph mst = kruskalMST(graph);
     // create the path through a dfs
     vector<int> traversal = dfsTraversal(mst);
     double cost = 0;
@@ -56,47 +56,42 @@ pair<vector<int>, double> tspTriangularAppHeuristic(const Graph& graph){
     return make_pair(traversal, cost);
 }
 
-// Function to construct and print MST for
-// a graph represented using adjacency
-// matrix representation
-Graph primMST(const Graph& graph) {
-    int n = int(graph.getAdj().size());
-    Graph mst;
-    vector<bool> visited(n, false);
-    unordered_map<int, unordered_map<int, double>> edges;
-    int next = 0;
+bool compareEdges(const pair<pair<int, int>, double>& edge1, const pair<pair<int, int>, double>& edge2) {
+    return edge1.second < edge2.second;
+}
 
-    for(int i = 0 ; i < n ; i++){
-        auto entry = graph.getAdj().at(next);
-        visited[next] = true;
-        int final_v = -1;
-        double final_weight = INT_MAX;
-        int source = -1;
+Graph kruskalMST(const Graph& graph) {
+    Graph mstGraph;
 
-        for(auto edge : entry){
-            edges[next][edge.first] = edge.second; // [destination] = [weight]
-        }
-
-        for(const auto& destination : edges){
-            for(const auto& edge : destination.second) { // edge = (destination, weight
-                double weight = edge.second;
-                if (!visited[edge.first] && weight < final_weight) {
-                    source = destination.first;
-                    final_v = edge.first;
-                    final_weight = weight;
-                }
-            }
-        }
-
-        edges[next].erase(final_v);
-
-        if(final_v != -1) {
-            mst.addEdge(source, final_v, final_weight);
-            next = final_v;
+    const unordered_map<int, unordered_map<int, double>>& adj = graph.getAdj();
+    vector<pair<pair<int, int>, double>> edges;
+    for (const auto& entry : adj) {
+        int source = entry.first;
+        for (const auto& neighbor : entry.second) {
+            int destination = neighbor.first;
+            double distance = neighbor.second;
+            edges.push_back(make_pair(make_pair(source, destination), distance));
         }
     }
 
-    return mst;
+    sort(edges.begin(), edges.end(), compareEdges);
+
+    UnionFind uf(graph.getNodes().size());
+
+    for (const auto& edge : edges) {
+        int source = edge.first.first;
+        int destination = edge.first.second;
+
+        int rootSource = uf.find(source);
+        int rootDestination = uf.find(destination);
+
+        if (rootSource != rootDestination) {
+            mstGraph.addEdge(source, destination, edge.second);
+            uf.unite(rootSource, rootDestination);
+        }
+    }
+
+    return mstGraph;
 }
 
 vector<int> dfsTraversal(const Graph& graph) {

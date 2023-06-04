@@ -11,7 +11,9 @@ void tspBacktrackingAux(const Graph& graph, vector<bool>& v, int currPos,
 
 pair<vector<int>, double> tspTriangularAppHeuristic(const Graph& graph);
 
-Graph primMST(const Graph& graph);
+bool compareEdges(const pair<pair<int, int>, double>& edge1, const pair<pair<int, int>, double>& edge2);
+
+Graph kruskalMST(const Graph& graph);
 
 vector<int> dfsTraversal(const Graph& graph);
 
