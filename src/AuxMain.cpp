@@ -2,7 +2,7 @@
 
 
 void showMenu() {
-    cout << "\n1) Print Graph\n"; //Depois muda-se e depois mete-se o print do grafo diferente
+    cout << "\n1) Print Graph\n";
     cout << "\n2) TSP Backtracking\n";
     cout << "\n3) TSP Triangular Approximation Heuristic\n";
     cout << "\n4) TSP Nearest Neighbor Heuristic\n";
@@ -10,7 +10,7 @@ void showMenu() {
     cout << "\nChoose an option: ";
 }
 
-void showFileOptions(){
+void showFileOptions() {
     cout << "\nToy Graphs:\n";
     cout << "\n\t11) Shipping\n";
     cout << "\t12) Stadiums\n";
@@ -36,7 +36,7 @@ void showFileOptions(){
     cout << "\nChoose an option: ";
 }
 
-void showFileOptionsStronglyConnected(){
+void showFileOptionsStronglyConnected() {
     cout << "\nToy Graphs:\n";
     cout << "\n\t12) Stadiums\n";
     cout << "\t13) Tourism\n";
@@ -61,7 +61,7 @@ void showFileOptionsStronglyConnected(){
     cout << "\nChoose an option: ";
 }
 
-string selectFile(){
+string selectFile() {
     int option;
     showFileOptions();
     option = readOption();
@@ -110,7 +110,7 @@ string selectFile(){
     return {};
 }
 
-string selectFileStronglyConnected(){
+string selectFileStronglyConnected() {
     int option;
     showFileOptionsStronglyConnected();
     option = readOption();
@@ -205,7 +205,7 @@ Graph createGraph(const std::string& filename) {
     return graph;
 }
 
-void addNodesToGraph(Graph& graph, const string& filename){
+void addNodesToGraph(Graph& graph, const string& filename) {
     std::ifstream file(filename);
     if (!file.is_open()) {
         std::cout << "Error on opening: " << filename << "\n";

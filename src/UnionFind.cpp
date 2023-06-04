@@ -1,5 +1,6 @@
 #include "UnionFind.h"
 
+
 UnionFind::UnionFind(int size) {
     parent.resize(size);
     rank.resize(size);

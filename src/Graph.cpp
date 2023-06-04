@@ -1,10 +1,10 @@
 #include "Graph.h"
 
+
 void Graph::addEdge(int source, int destination, double distance) {
     adj[source][destination] = distance;
     adj[destination][source] = distance;
 }
-
 
 void Graph::printGraph() const {
     for (const auto& entry : this->getAdj()) {
@@ -25,7 +25,7 @@ void Graph::setAdj(const unordered_map<int, unordered_map<int, double>> &adj) {
     Graph::adj = adj;
 }
 
-void Graph::addNode(Node node){
+void Graph::addNode(Node node) {
     nodes.push_back(node);
 }
 
@@ -35,10 +35,4 @@ const vector<Node> &Graph::getNodes() const {
 
 void Graph::setNodes(const vector<Node> &nodes) {
     Graph::nodes = nodes;
-}
-
-void Graph::printNodes() const {
-    for(auto node : nodes){
-        cout << setprecision(14) << fixed << node.getId() << " ->  x: " << node.getX() << "  y: " << node.getY() << endl;
-    }
 }
