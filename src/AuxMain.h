@@ -4,8 +4,6 @@
 
 #include "Graph.h"
 
-using namespace std;
-
 
 /**
  * @brief Shows the main menu
@@ -22,8 +20,16 @@ void showFileOptions();
  */
 void showFileOptionsStronglyConnected();
 
+/**
+ * @brief Handles the option chosen by the user
+ * @return The file path of the graph chosen by the user
+ */
 string selectFile();
 
+/**
+ * @brief Handles the option chosen by the user for strongly connected graphs
+ * @return The file path of the graph chosen by the user
+ */
 string selectFileStronglyConnected();
 
 /**
@@ -52,5 +58,6 @@ Graph createGraph(const std::string& filename);
  * @param filename The name of the file
  */
 void addNodesToGraph(Graph& graph, const string& filename);
+
 
 #endif
